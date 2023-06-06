@@ -13,8 +13,8 @@ using namespace std;
 
 int main(int argc, char** argv)
 {
-    
-    char str[100];                                                                                                                     
+
+    string mystring;
     ifstream inFile;
 
     inFile.open("Guardianes.txt");
@@ -23,14 +23,12 @@ int main(int argc, char** argv)
         exit(1); // terminate with error
     }
 
-    while (inFile.getline(str, 100, '#'))
-    {
-        cout << str << endl;
-    }
+    inFile >> mystring; // pipe file's content into stream
+    cout << mystring;
 
     inFile.close();
-    
-    
-   
+
+
+
     return 0;
 }
