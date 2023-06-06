@@ -1,2 +1,2 @@
-Stormheart,100,,Tesla
+Stormheart,100,Tesla
 
