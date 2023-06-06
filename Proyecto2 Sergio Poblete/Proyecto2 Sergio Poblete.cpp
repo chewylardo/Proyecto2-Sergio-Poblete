@@ -14,9 +14,23 @@ using namespace std;
 int main(int argc, char** argv)
 {
     
-    cout << "argc:\t" << argc;
-    cout << "\n";
-    cout << "argv:\t" << argv[0];
+    char str[100];                                                                                                                     
+    ifstream inFile;
+
+    inFile.open("Guardianes.txt");
+    if (!inFile) {
+        cout << "Unable to open file";
+        exit(1); // terminate with error
+    }
+
+    while (inFile.getline(str, 100, '#'))
+    {
+        cout << str << endl;
+    }
+
+    inFile.close();
+    
+    
    
     return 0;
 }
