@@ -11,6 +11,10 @@
 using namespace std;
 
 
+typedef struct Guardian {
+
+}Guardian;
+
 int main(int argc, char** argv)
 {
 
@@ -23,9 +27,17 @@ int main(int argc, char** argv)
         exit(1); // terminate with error
     }
 
-    inFile >> mystring; // pipe file's content into stream
-    cout << mystring;
-
+    string Name, auxPowerLevel, Village, MainMaster;
+    int PowerLevel;
+  while(getline(inFile, mystring)){ 
+      stringstream ss(mystring);
+      getline(ss, Name, ',');
+      getline(ss, auxPowerLevel, ',');
+      PowerLevel = stoi(auxPowerLevel);
+      getline(ss, Village, ',');
+      getline(ss, MainMaster, ',');
+      cout << Name << "\n"; 
+      }
     inFile.close();
 
 
