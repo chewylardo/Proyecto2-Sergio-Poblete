@@ -76,8 +76,12 @@ int main(int argc, char** argv)
         std::cout << name << endl;
     }
 
-
-
+    ifstream inFile2;
+    inFile2.open("Villages.txt");
+    if (!inFile) {
+        cout << "Unable to open file";
+        exit(1); // terminate with error
+    }
 
 
     return 0;
