@@ -120,23 +120,22 @@ int main(int argc, char** argv)
     }
     inFile2.close();
 
-    list<Ciudades>::iterator it2;
+    
 
+  
+
+  
+    list<Ciudades>::iterator it2;
     for (it2 = misCiudades.begin(); it2 != misCiudades.end(); it2++)
     {
-        if (it2->Nombre == "comodin") {
-
-            misCiudades.erase(it2++);
-
+        if (it2->Nombre != "comodin") {
+            cout << "\n" << it2->Nombre << endl;
+            cout << "\n se conecta con " ;
+            for (auto const& i : it2->Vecinos) {
+                cout << i << endl;
+            }
         }
-        
-    }
-   
-  
-    list<Ciudades>::iterator it3;
-    for (it3 = misCiudades.begin(); it3 != misCiudades.end(); it3++)
-    {   
-            cout << it3->Nombre << endl;
+            
     }
 
     return 0;
