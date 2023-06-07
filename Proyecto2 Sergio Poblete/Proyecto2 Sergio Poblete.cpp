@@ -16,7 +16,15 @@ typedef struct Guardian {
     int PowerLevel;
 }Guardian;
 
-Guardian crear(string name,  string  village, string  mainMaster, int powerlevel) {
+
+typedef struct ciudades {
+    string Nombre;
+    list<ciudades>Vecinos;
+
+}Ciudades;
+
+
+Guardian crearG(string name,  string  village, string  mainMaster, int powerlevel) {
 
     Guardian newGuardian;
 
@@ -29,12 +37,16 @@ Guardian crear(string name,  string  village, string  mainMaster, int powerlevel
     return newGuardian;
 }
 
+
+
 int main(int argc, char** argv)
 {
 
     string mystring;
     ifstream inFile;
     list<Guardian>Guardianes;
+    list<Ciudades>misCiudades;
+    
 
     inFile.open("Guardianes.txt");
     if (!inFile) {
@@ -53,20 +65,19 @@ int main(int argc, char** argv)
         getline(ss, MainMaster, ',');
       
 
-        Guardianes.push_back(crear(Name, Village, MainMaster, PowerLevel));
+        Guardianes.push_back(crearG(Name, Village, MainMaster, PowerLevel));
     }
 
     inFile.close();
     list<Guardian>::iterator it;
-
     for (it = Guardianes.begin(); it != Guardianes.end(); it++)
     {
-       
-        
         string name = it->Name;
-
         std::cout << name << endl;
     }
+
+
+
 
 
     return 0;
