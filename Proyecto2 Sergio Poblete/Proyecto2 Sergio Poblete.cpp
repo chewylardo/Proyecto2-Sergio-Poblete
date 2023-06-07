@@ -77,7 +77,7 @@ void ListaDevecinos(list<Ciudades>misCiudades) {
     {
         for (auto const& i : it->Vecinos) {
 
-            //lista.push(llamar funcion)
+            it->newVecinos.push_back(buscarVecino(misCiudades, i));
 
             cout << i << endl;
         }
@@ -101,6 +101,8 @@ Ciudades buscarVecino(list<Ciudades>misCiudades,string vecino) {
         }
 
     }
+
+    
 }
 
 int main(int argc, char** argv)
