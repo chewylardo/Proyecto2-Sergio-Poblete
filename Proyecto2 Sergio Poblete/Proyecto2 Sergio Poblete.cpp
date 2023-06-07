@@ -19,7 +19,7 @@ typedef struct Guardian {
 
 typedef struct ciudades {
     string Nombre;
-    list<ciudades>Vecinos;
+    list<string>Vecinos;
 
 }Ciudades;
 
@@ -37,7 +37,32 @@ Guardian crearG(string name,  string  village, string  mainMaster, int powerleve
     return newGuardian;
 }
 
+Ciudades crearC(string nombre,string vecino,list<Ciudades> auxlist) {
 
+    Ciudades newCiudad;
+   
+    
+    list<Ciudades>::iterator it;
+    for (it = auxlist.begin(); it != auxlist.end(); it++)
+    {   
+        if (it->Nombre == nombre) {
+
+          
+            it->Vecinos.push_back(vecino);
+            newCiudad.Nombre = "comodin";
+            return newCiudad;
+        }
+    }
+
+   
+
+    newCiudad.Nombre = nombre;
+    newCiudad.Vecinos.push_back(vecino);
+    
+   
+
+    return newCiudad;
+}
 
 int main(int argc, char** argv)
 {
@@ -77,12 +102,42 @@ int main(int argc, char** argv)
     }
 
     ifstream inFile2;
+    string mynewstring;
     inFile2.open("Villages.txt");
-    if (!inFile) {
+    if (!inFile2) {
         cout << "Unable to open file";
-        exit(1); // terminate with error
+        exit(1); 
     }
 
+    string ciudad, vecino;
+
+    while (getline(inFile2, mynewstring)) {
+        stringstream ss(mynewstring);
+        getline(ss,ciudad, ',');
+        getline(ss,vecino, ',');
+
+        misCiudades.push_back(crearC(ciudad, vecino, misCiudades));
+    }
+    inFile2.close();
+
+    list<Ciudades>::iterator it2;
+
+    for (it2 = misCiudades.begin(); it2 != misCiudades.end(); it2++)
+    {
+        if (it2->Nombre == "comodin") {
+
+            misCiudades.erase(it2++);
+
+        }
+        
+    }
+   
+  
+    list<Ciudades>::iterator it3;
+    for (it3 = misCiudades.begin(); it3 != misCiudades.end(); it3++)
+    {   
+            cout << it3->Nombre << endl;
+    }
 
     return 0;
 }
