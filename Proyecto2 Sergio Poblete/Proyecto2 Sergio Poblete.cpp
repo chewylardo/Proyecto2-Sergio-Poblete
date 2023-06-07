@@ -12,14 +12,29 @@ using namespace std;
 
 
 typedef struct Guardian {
-
+    string Name, auxPowerLevel, Village, MainMaster;
+    int PowerLevel;
 }Guardian;
+
+Guardian crear(string name,  string  village, string  mainMaster, int powerlevel) {
+
+    Guardian newGuardian;
+
+    newGuardian.Name = name;
+    newGuardian.Village = village;
+    newGuardian.MainMaster = mainMaster;
+    newGuardian.auxPowerLevel = powerlevel;
+
+
+    return newGuardian;
+}
 
 int main(int argc, char** argv)
 {
 
     string mystring;
     ifstream inFile;
+    list<Guardian>Guardianes;
 
     inFile.open("Guardianes.txt");
     if (!inFile) {
@@ -29,17 +44,29 @@ int main(int argc, char** argv)
 
     string Name, auxPowerLevel, Village, MainMaster;
     int PowerLevel;
-  while(getline(inFile, mystring)){ 
-      stringstream ss(mystring);
-      getline(ss, Name, ',');
-      getline(ss, auxPowerLevel, ',');
-      PowerLevel = stoi(auxPowerLevel);
-      getline(ss, Village, ',');
-      getline(ss, MainMaster, ',');
-      cout << Name << "\n"; 
-      }
-    inFile.close();
+    while(getline(inFile, mystring)){ 
+        stringstream ss(mystring);
+        getline(ss, Name, ',');
+        getline(ss, auxPowerLevel, ',');
+        PowerLevel = stoi(auxPowerLevel);
+        getline(ss, Village, ',');
+        getline(ss, MainMaster, ',');
+      
 
+        Guardianes.push_back(crear(Name, Village, MainMaster, PowerLevel));
+    }
+
+    inFile.close();
+    list<Guardian>::iterator it;
+
+    for (it = Guardianes.begin(); it != Guardianes.end(); it++)
+    {
+       
+        
+        string name = it->Name;
+
+        std::cout << name << endl;
+    }
 
 
     return 0;
