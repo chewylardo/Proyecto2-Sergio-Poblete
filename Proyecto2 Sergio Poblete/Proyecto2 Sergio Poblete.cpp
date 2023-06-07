@@ -69,6 +69,23 @@ Ciudades crearC(string nombre,string vecino,list<Ciudades> auxlist) {
     return newCiudad;
 }
 
+Ciudades buscarVecino(list<Ciudades>misCiudades, string vecino) {
+
+    Ciudades auxCity;
+
+    list<Ciudades>::iterator it;
+    for (it = misCiudades.begin(); it != misCiudades.end(); it++)
+    {
+        if (it->Nombre == vecino) {
+
+            return *it;
+        }
+
+    }
+
+
+}
+
 void ListaDevecinos(list<Ciudades>misCiudades) {
 
 
@@ -88,22 +105,7 @@ void ListaDevecinos(list<Ciudades>misCiudades) {
 
 }
 
-Ciudades buscarVecino(list<Ciudades>misCiudades,string vecino) {
 
-    Ciudades auxCity;
-
-    list<Ciudades>::iterator it;
-    for (it = misCiudades.begin(); it != misCiudades.end(); it++)
-    {
-        if (it->Nombre == vecino) {
-            
-            return *it;
-        }
-
-    }
-
-    
-}
 
 int main(int argc, char** argv)
 {
