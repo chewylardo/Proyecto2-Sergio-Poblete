@@ -22,9 +22,10 @@ typedef struct guardian {
 
 typedef struct ciudades {
     string Nombre;
-    //list<ciudades*>Vecinos;
     list<string>Vecinos;
     list<ciudades>newVecinos;
+    list<Guardian>guardianes;
+
 
 }Ciudades;
 
@@ -105,7 +106,28 @@ void ListaDevecinos(list<Ciudades>misCiudades) {
 
 }
 
+void Habitantes(list<Guardian>Guardianes, list<Ciudades>misCiudades){
 
+
+
+    list<Guardian>::iterator it;
+    for (it = Guardianes.begin(); it != Guardianes.end(); it++)
+    {
+     
+        list<Ciudades>::iterator it2;
+        for (it2 = misCiudades.begin(); it2 != misCiudades.end(); it2++) {
+
+            if (it->Village == it->Name) {
+
+                it2->guardianes.push_back(*it);
+
+            }
+
+        }
+
+    }
+
+}
 
 int main(int argc, char** argv)
 {
@@ -173,11 +195,6 @@ int main(int argc, char** argv)
     }
     inFile2.close();
 
-    
-
-  
-
-  
     list<Ciudades>::iterator it3;
     for (it3 = misCiudades.begin(); it3 != misCiudades.end(); it3++)
     {
@@ -191,7 +208,7 @@ int main(int argc, char** argv)
             
     }
 
-
+    Habitantes(Guardianes, misCiudades);
 
 
 
