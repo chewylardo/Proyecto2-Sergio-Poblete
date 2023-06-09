@@ -1,0 +1,15 @@
+﻿'Proyecto2 Sergio Poblete.exe' (Win32): 'C:\Users\Hp\source\repos\Proyecto2-Sergio-Poblete\x64\Debug\Proyecto2 Sergio Poblete.exe' cargado. Símbolos cargados.
+'Proyecto2 Sergio Poblete.exe' (Win32): 'C:\Windows\System32\ntdll.dll' cargado. 
+'Proyecto2 Sergio Poblete.exe' (Win32): 'C:\Windows\System32\kernel32.dll' cargado. 
+'Proyecto2 Sergio Poblete.exe' (Win32): 'C:\Windows\System32\KernelBase.dll' cargado. 
+'Proyecto2 Sergio Poblete.exe' (Win32): 'C:\Windows\System32\msvcp140d.dll' cargado. 
+'Proyecto2 Sergio Poblete.exe' (Win32): 'C:\Windows\System32\vcruntime140d.dll' cargado. 
+'Proyecto2 Sergio Poblete.exe' (Win32): 'C:\Windows\System32\vcruntime140_1d.dll' cargado. 
+'Proyecto2 Sergio Poblete.exe' (Win32): 'C:\Windows\System32\ucrtbased.dll' cargado. 
+El subproceso 0x26f4 terminó con código 0 (0x0).
+'Proyecto2 Sergio Poblete.exe' (Win32): 'C:\Windows\System32\kernel.appcore.dll' cargado. 
+'Proyecto2 Sergio Poblete.exe' (Win32): 'C:\Windows\System32\msvcrt.dll' cargado. 
+'Proyecto2 Sergio Poblete.exe' (Win32): 'C:\Windows\System32\rpcrt4.dll' cargado. 
+El subproceso 0x34d4 terminó con código 0 (0x0).
+El subproceso 0xfc4 terminó con código 0 (0x0).
+El programa '[2140] Proyecto2 Sergio Poblete.exe' terminó con código 0 (0x0).

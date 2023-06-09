@@ -106,19 +106,20 @@ void ListaDevecinos(list<Ciudades>misCiudades) {
 
 }
 
-void Habitantes(list<Guardian>Guardianes, list<Ciudades>misCiudades){
+list<Ciudades> Habitantes(list<Guardian>Guardianes, list<Ciudades>misCiudades){
 
 
 
     list<Guardian>::iterator it;
     for (it = Guardianes.begin(); it != Guardianes.end(); it++)
-    {
-     
+    {   
+      
         list<Ciudades>::iterator it2;
         for (it2 = misCiudades.begin(); it2 != misCiudades.end(); it2++) {
+         
+            if (it->Village == it2->Nombre){
 
-            if (it->Village == it->Name) {
-
+                cout << "entre" << endl;
                 it2->guardianes.push_back(*it);
 
             }
@@ -126,6 +127,9 @@ void Habitantes(list<Guardian>Guardianes, list<Ciudades>misCiudades){
         }
 
     }
+
+    
+    return misCiudades;
 
 }
 
@@ -151,13 +155,16 @@ int main(int argc, char** argv)
         getline(ss, Name, ',');
         getline(ss, auxPowerLevel, ',');
         PowerLevel = stoi(auxPowerLevel);
-        getline(ss, Village, ',');
         getline(ss, MainMaster, ',');
+        getline(ss, Village, ',');
+       
       
 
         Guardianes.push_back(crearG(Name, Village, MainMaster, PowerLevel));
+        cout << Village<< endl;
     }
 
+    cout << "\n\n\n\n" << endl;
     inFile.close();
     list<Guardian>::iterator it;
     for (it = Guardianes.begin(); it != Guardianes.end(); it++)
@@ -175,7 +182,7 @@ int main(int argc, char** argv)
     }
 
     string ciudad, vecino;
-
+    bool tesla = false;
     while (getline(inFile2, mynewstring)) {
         stringstream ss(mynewstring);
         getline(ss,ciudad, ',');
@@ -191,25 +198,73 @@ int main(int argc, char** argv)
             }
         }
         misCiudades.push_back(crearC(ciudad, vecino, misCiudades));
-        
+        if (ciudad == "Tesla") {
+            tesla = true;
+        }
     }
-    inFile2.close();
 
+    if (tesla == false) {
+
+        misCiudades.push_back(crearC("Tesla", "", misCiudades));
+    }
+
+
+    inFile2.close();
+    int contciudades = 0;
     list<Ciudades>::iterator it3;
     for (it3 = misCiudades.begin(); it3 != misCiudades.end(); it3++)
     {
         if (it3->Nombre != "comodin") {
-            cout << "\n" << it3->Nombre << endl;
-            cout << "\nse conecta con\n" ;
+           // cout << "\n" << it3->Nombre << endl;
+            //cout << "\nse conecta con\n" ;
             for (auto const& i : it3->Vecinos) {
-                cout << i << endl;
+               //cout << i << endl;
             }
-        }
+
             
+        }
+        contciudades++;
     }
 
-    Habitantes(Guardianes, misCiudades);
+    if (contciudades < 3) {
 
+        cout << "no hay suficientes ciudades para jugar" << endl;
+        cout << "porfavor reparar archivo Villages.txt";
+        return 0;
+    }
+
+    misCiudades = Habitantes(Guardianes, misCiudades);
+
+    
+    int contHabitantes = 0;
+    list<Ciudades>::iterator it4;
+    for (it4 = misCiudades.begin(); it4 != misCiudades.end(); it4++) {
+        contHabitantes = 0;
+        if (it4->Nombre != "comodin" && it4->Nombre != "River Village") {
+            for (auto const& i : it4->guardianes) {
+
+                if (it4->Nombre != "Tesla") {
+                    // cout << i.Name << endl;
+                    contHabitantes++;
+
+                }
+                else {
+                    contHabitantes = 2;
+                }
+
+
+            }
+            cout << contHabitantes << endl;
+            if (contHabitantes < 2) {
+                cout << it4->Nombre << endl;
+                cout << "Porfavor reparar archivo Guardianes.txt" << endl;
+                cout << "Se requieren minimo 2 guardianes por ciudad(sin incluir tesla, este solo necesita 1)";
+                return 0;
+            }
+        }
+    }
+
+    
 
 
 
