@@ -15,7 +15,9 @@ typedef struct guardian {
 
     string Name, auxPowerLevel, Village, MainMaster;
     int PowerLevel;
+    list<guardian>misAprendices;
     guardian newMainMaster();
+
 
 }Guardian;
 
@@ -32,9 +34,10 @@ typedef struct ciudades {
 void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
 
     Guardian miGuardian;
+    miGuardian.Name = "Nulo";
     cout << "Bienvenido a el juego" << endl;
     cout << "selecione un guardian con el que quiere jugar (escriba el nombre exactamente igual)"<<endl;
-    cout << "\n\n\n" << endl;
+    cout << "\n" << endl;
   
 
     list<Ciudades>::iterator it;
@@ -48,10 +51,26 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
            
     }
 
+    string buscar;
+ 
     
+    while (miGuardian.Name == "Nulo") {
+        cin >> buscar;
+        for (auto const& i : Guardianes) {
 
+            if (i.Name == buscar) {
 
+                miGuardian.Name = i.Name;
+                miGuardian.Village = i.Village;
+                miGuardian.MainMaster = i.MainMaster;
+                miGuardian.PowerLevel = i.PowerLevel;
 
+            }
+
+        }
+    }
+    
+    
 
 }
 
