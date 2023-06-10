@@ -21,6 +21,7 @@ Xander,78,Cyrus,Desert Village
 Elysia,93,Aurelia,Mountain Village
 Silas,77,Galen,Coast Village
 Raine,89,Selene,River Village
+Abbadon,80,Raine,River Village
 Archer,75,Rowan,Valley Village
 Seraphina,85,Thalia,Hill Village
 Isolde,88,Luther,Cliff Village
