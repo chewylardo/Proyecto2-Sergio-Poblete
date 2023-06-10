@@ -19,7 +19,7 @@ typedef struct guardian {
     guardian newMainMaster();
 
 
-}Guardian;
+} Guardian;
 
 
 typedef struct ciudades {
@@ -65,6 +65,8 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
                 miGuardian.MainMaster = i.MainMaster;
                 miGuardian.PowerLevel = i.PowerLevel;
                 //añadir funcion para reparar el guardian clonado, debe revisar su maestro y aprendces para  que no sea mas debil que sus aprendices y no sea mas fuerte que su maestro
+
+                
             }
 
         }
@@ -73,6 +75,15 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
     
 
 }
+
+void reeplazarGuardian(Guardian i) {
+
+    i.Name = "Angron";
+
+
+
+}
+
 
 Guardian crearG(string name,  string  village, string  mainMaster, int powerlevel) {
 
@@ -306,6 +317,21 @@ int main(int argc, char** argv)
                 return 0;
             }
         }
+    }
+
+    list<Guardian>::iterator it5;
+    for (it5 = Guardianes.begin(); it5 != Guardianes.end(); it5++)
+    {
+
+        list<Guardian>::iterator it6;
+        for (it6 = Guardianes.begin(); it6 != Guardianes.end(); it6++) {
+
+            if (it5->MainMaster == it6->Name){
+                it5->newMainMaster() = *it6;
+            }
+
+        }
+
     }
 
     menuInicial(Guardianes, misCiudades);
