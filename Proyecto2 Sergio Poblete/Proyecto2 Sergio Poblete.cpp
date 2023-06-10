@@ -64,7 +64,7 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
                 miGuardian.Village = i.Village;
                 miGuardian.MainMaster = i.MainMaster;
                 miGuardian.PowerLevel = i.PowerLevel;
-
+                //añadir funcion para reparar el guardian clonado, debe revisar su maestro y aprendces para  que no sea mas debil que sus aprendices y no sea mas fuerte que su maestro
             }
 
         }
