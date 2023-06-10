@@ -29,6 +29,16 @@ typedef struct ciudades {
 
 }Ciudades;
 
+void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
+
+    Guardian miGuardian;
+
+    cout << "selecione un guardian con el que quiere jugar"<<endl;
+
+
+
+
+}
 
 Guardian crearG(string name,  string  village, string  mainMaster, int powerlevel) {
 
