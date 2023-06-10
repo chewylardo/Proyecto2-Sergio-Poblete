@@ -32,8 +32,23 @@ typedef struct ciudades {
 void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
 
     Guardian miGuardian;
+    cout << "Bienvenido a el juego" << endl;
+    cout << "selecione un guardian con el que quiere jugar (escriba el nombre exactamente igual)"<<endl;
+    cout << "\n\n\n" << endl;
+  
 
-    cout << "selecione un guardian con el que quiere jugar"<<endl;
+    list<Ciudades>::iterator it;
+    for (it = misCiudades.begin(); it != misCiudades.end(); it++) {
+
+        for (auto const& i : it->guardianes) {
+
+            cout << i.Name << endl;
+            
+        }
+           
+    }
+
+    
 
 
 
@@ -107,7 +122,7 @@ void ListaDevecinos(list<Ciudades>misCiudades) {
 
             it->newVecinos.push_back(buscarVecino(misCiudades, i));
 
-            cout << i << endl;
+           // cout << i << endl;
         }
 
     }
@@ -129,7 +144,7 @@ list<Ciudades> Habitantes(list<Guardian>Guardianes, list<Ciudades>misCiudades){
          
             if (it->Village == it2->Nombre){
 
-                cout << "entre" << endl;
+               // cout << "entre" << endl;
                 it2->guardianes.push_back(*it);
 
             }
@@ -171,16 +186,16 @@ int main(int argc, char** argv)
       
 
         Guardianes.push_back(crearG(Name, Village, MainMaster, PowerLevel));
-        cout << Village<< endl;
+        //cout << Village<< endl;
     }
 
-    cout << "\n\n\n\n" << endl;
+    //cout << "\n\n\n\n" << endl;
     inFile.close();
     list<Guardian>::iterator it;
     for (it = Guardianes.begin(); it != Guardianes.end(); it++)
     {
         string name = it->Name;
-        std::cout << name << endl;
+        //cout << name << endl;
     }
 
     ifstream inFile2;
@@ -250,7 +265,7 @@ int main(int argc, char** argv)
     list<Ciudades>::iterator it4;
     for (it4 = misCiudades.begin(); it4 != misCiudades.end(); it4++) {
         contHabitantes = 0;
-        if (it4->Nombre != "comodin" && it4->Nombre != "River Village") {
+        if (it4->Nombre != "comodin" ) {
             for (auto const& i : it4->guardianes) {
 
                 if (it4->Nombre != "Tesla") {
@@ -264,9 +279,9 @@ int main(int argc, char** argv)
 
 
             }
-            cout << contHabitantes << endl;
+            //cout << contHabitantes << endl;
             if (contHabitantes < 2) {
-                cout << it4->Nombre << endl;
+                //cout << it4->Nombre << endl;
                 cout << "Porfavor reparar archivo Guardianes.txt" << endl;
                 cout << "Se requieren minimo 2 guardianes por ciudad(sin incluir tesla, este solo necesita 1)";
                 return 0;
@@ -274,7 +289,7 @@ int main(int argc, char** argv)
         }
     }
 
-    
+    menuInicial(Guardianes, misCiudades);
 
 
 
