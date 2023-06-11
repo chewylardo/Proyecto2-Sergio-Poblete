@@ -34,6 +34,7 @@ typedef struct ciudades {
 
 
 }Ciudades;
+
 Guardian reeplazarGuardian(Guardian i) {
 
     i.Name = "Angron";
@@ -41,7 +42,7 @@ Guardian reeplazarGuardian(Guardian i) {
     srand((unsigned)time(NULL));
     int min = 0;
     list<Guardian>::iterator it;
-    for (it = i.Maestro.begin(); it != i.Maestro.end(); it++) {
+    for (it = i.Maestro.begin(); it !=i.Maestro.end(); it++) {
 
         max = it->PowerLevel;
         cout <<"max: "<< max << endl;
@@ -79,8 +80,8 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
     int min;
     int max;
     int cont = 0;
-    Guardian *MaestroActual = new Guardian();
-    Guardian *Recomendado = new Guardian();;
+    Guardian MaestroActual;
+    Guardian Recomendado;
 
     for (auto const& i : CiudadActual.guardianes) {
         
@@ -89,23 +90,21 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
             max = i.PowerLevel;
         }else if(i.PowerLevel>max){
             max = i.PowerLevel;
-            *MaestroActual = i;
+            MaestroActual = i;
         }
         else if(i.PowerLevel<min){
             min = i.PowerLevel;
-            *Recomendado = i;
+            Recomendado = i;
         }
 
+        if (i.Name != miGuardian->Name) {
+            cout << i.Name << endl;
+        }
+        
         cont++;
     }
 
-    MaestroActual->estado = "Derrotado";
-
-    for (auto const& i : CiudadActual.guardianes) {
-        if (MaestroActual->Name == i.Name) {
-            cout << "el estado actual de " << i.Name << " es " << i.estado << endl;
-        }
-    }
+    
 
 
 
@@ -219,30 +218,38 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
     }
 
     string buscar;
- 
+    Guardian Pointer;
     
     while (miGuardian.Name == "Nulo") {
         cin >> buscar;
 
         list<Guardian>::iterator it;
         for (it = Guardianes.begin(); it != Guardianes.end(); it++) {
+            list<Ciudades>::iterator it2;
+            for (it2 = misCiudades.begin(); it2 != misCiudades.end(); it2++) {
+                list<Guardian>::iterator it3;
+                for (it3 = it2->guardianes.begin(); it3 != it2->guardianes.end(); it3++) {
+                    if (buscar == it->Name && it->Name == it3->Name) {
+                        miGuardian.Name = it->Name;
+                        miGuardian.Village = it->Village;
+                        miGuardian.MainMaster = it->MainMaster;
+                        miGuardian.PowerLevel = it->PowerLevel / 2;
+                        //cout << "original power level" << it->PowerLevel << endl;
 
-            if (buscar == it->Name) {
-                miGuardian.Name = it->Name;
-                miGuardian.Village = it->Village;
-                miGuardian.MainMaster = it->MainMaster;
-                miGuardian.PowerLevel = it->PowerLevel/2;
-                //cout << "original power level" << it->PowerLevel << endl;
-                *it=reeplazarGuardian(*it);
-                //añadir funcion para reparar el guardian clonado, debe revisar su maestro y aprendces para  que no sea mas debil que sus aprendices y no sea mas fuerte que su maestro
+                        *it = reeplazarGuardian(*it);
+                        *it3 = *it;
+                        //añadir funcion para reparar el guardian clonado, debe revisar su maestro y aprendces para  que no sea mas debil que sus aprendices y no sea mas fuerte que su maestro
 
-                //cout << it->Name << endl;
-                //cout << it->PowerLevel << endl;
+                        //cout << it->Name << endl;
+                        //cout << it->PowerLevel << endl;
+                    }
+                }
+
             }
+
         }
-        
+
     }
-    
 
 
     system("cls");
@@ -264,9 +271,16 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
             entrenar(&Guardianes, &misCiudades, &miGuardian);
            
         }
-        
+        StormhartDefeated == true;
     }
-    
+
+    system("cls");
+    for (auto const& i : Guardianes) {
+        
+        cout << "nombre " << i.Name << " maestro " << i.MainMaster << endl;
+
+
+    }
 
 }
 
