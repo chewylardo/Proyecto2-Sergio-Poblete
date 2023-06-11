@@ -29,6 +29,7 @@ typedef struct ciudades {
     list<string>Vecinos;
     list<ciudades>newVecinos;
     list<Guardian>guardianes;
+    int puntosTotales = 3;
 
 
 
@@ -63,11 +64,23 @@ Guardian reeplazarGuardian(Guardian i) {
     return i;
 }
 
-int entrenar() {
+int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *miGuardian) {
+
+
+    
+
+
+
+
+
+
+
+
+
 
     return 0;
 }
-string viajar(Guardian miGuardian, list<Ciudades>misCiudades) {
+string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
 
     system("cls");
     cout << "A que ciudad desea usted viajar" << endl;
@@ -77,7 +90,7 @@ string viajar(Guardian miGuardian, list<Ciudades>misCiudades) {
     string voydeviaje;
     cout << "\n" << endl;
     for (auto const& i : misCiudades) {
-        if (i.Nombre == miGuardian.Village) {
+        if (i.Nombre == miGuardian->Village) {
             CiudadActual = i;
             cout <<"mi ciudad es "<< CiudadActual.Nombre << endl;
         }
@@ -119,6 +132,7 @@ string viajar(Guardian miGuardian, list<Ciudades>misCiudades) {
             if (voydeviaje == i) {
                 system("cls");
                 cout << "viajaste a " << i << " ganaste 1 punto" << endl;
+                miGuardian->PowerLevel += 1;
                 cout << "\n\n" << endl;
                 return i;
             }
@@ -130,6 +144,7 @@ string viajar(Guardian miGuardian, list<Ciudades>misCiudades) {
             if (voydeviaje == i) {
                 system("cls");
                 cout << "viajaste a " << i << " perdiste 4 puntos" << endl;
+                miGuardian->PowerLevel -= 4;
                 cout << "\n\n" << endl;
                 return i;
             }
@@ -180,7 +195,7 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
                 miGuardian.Name = it->Name;
                 miGuardian.Village = it->Village;
                 miGuardian.MainMaster = it->MainMaster;
-                miGuardian.PowerLevel = it->PowerLevel;
+                miGuardian.PowerLevel = it->PowerLevel/2;
                 //cout << "original power level" << it->PowerLevel << endl;
                 *it=reeplazarGuardian(*it);
                 //añadir funcion para reparar el guardian clonado, debe revisar su maestro y aprendces para  que no sea mas debil que sus aprendices y no sea mas fuerte que su maestro
@@ -207,11 +222,13 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
         cout << "(escriba que prefiere)" << endl;
         cin >> selector1;
         if (selector1 == "viajar") {
-            miGuardian.Village=viajar(miGuardian, misCiudades);
+            miGuardian.Village=viajar(&miGuardian, misCiudades);
         }
         if (selector1 == "entrenar") {
-
+            entrenar(&Guardianes, &misCiudades, &miGuardian);
+            cout <<"mi guardian ahora es "<< miGuardian.Name << endl;
         }
+        
     }
     
 
