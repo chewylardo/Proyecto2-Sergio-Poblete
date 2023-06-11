@@ -88,11 +88,12 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
         if (cont == 0) {
             min = i.PowerLevel;
             max = i.PowerLevel;
-        }else if(i.PowerLevel>max){
+            MaestroActual = i;
+        }else if(i.PowerLevel>=max && i.Name != "") {
             max = i.PowerLevel;
             MaestroActual = i;
         }
-        else if(i.PowerLevel<min){
+        else if(i.PowerLevel<=min && i.Name != ""){
             min = i.PowerLevel;
             Recomendado = i;
         }
@@ -104,7 +105,18 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
         cont++;
     }
 
-    
+    cout << "Elija con quien quiere entrenar" << endl;
+    list<Guardian>::iterator it2;
+    cout << "Maestro " << MaestroActual.Name << MaestroActual.PowerLevel<< endl;
+    cout << "Aprendiz recomendad " << Recomendado.Name << Recomendado.PowerLevel<< endl;
+    cout << "Otras opciones" << endl;
+    for (it2 = CiudadActual.guardianes.begin(); it2 != CiudadActual.guardianes.end(); it2++) {
+        
+        if (it2->Name != MaestroActual.Name && it2->Name != Recomendado.Name) {
+            cout << it2->Name << " " << it2->PowerLevel << endl;
+        }
+
+    }
 
 
 
@@ -271,13 +283,18 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
             entrenar(&Guardianes, &misCiudades, &miGuardian);
            
         }
-        StormhartDefeated == true;
+       
     }
 
     system("cls");
-    for (auto const& i : Guardianes) {
+
+    list<Guardian>::iterator it3;
+    for (it3 = Guardianes.begin(); it3  != Guardianes.end(); it3++) {
         
-        cout << "nombre " << i.Name << " maestro " << i.MainMaster << endl;
+        if (it3->Name != ""){
+            cout << "nombre " << it3->Name << " maestro " << it3->MainMaster << endl;
+        }
+        
 
 
     }
