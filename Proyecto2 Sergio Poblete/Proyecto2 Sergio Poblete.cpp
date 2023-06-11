@@ -197,6 +197,77 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
 
     return 0;
 }
+
+Guardian CrearGuardianPropio(list<Guardian>Guardianes, list<Ciudades> misCiudades) {
+    Guardian newGuardian;
+    
+    string newName;
+    string newVillage;
+    bool NombreYaExiste = true;
+    bool CiudadExiste = false;
+    int auxcont = 0;
+
+    while(NombreYaExiste == true){
+        NombreYaExiste = false;
+        if (auxcont == 0) {
+            cout << "Como quiere llamarse?(ingrese su nombre)" << endl;
+        }
+        else {
+            cout << "Ese nombre ya existe porfavor elija otro" << endl;
+        }
+    
+        cin >> newName;
+        
+        list<Guardian>::iterator it;
+        for (it = Guardianes.begin(); it != Guardianes.end(); it++) {
+         
+            if (newName == it->Name) {
+                NombreYaExiste = true;
+            }
+        }
+    
+        if (NombreYaExiste == false) {
+            newGuardian.Name = newName;
+        }
+    
+        auxcont = 1;
+    }
+
+    auxcont = 0;
+    while (CiudadExiste == false) {
+        if (auxcont == 0) {
+            cout << "En que ciudad quiere partir?(ingrese el nombre)" << endl;
+        }
+        else {
+            cout << "Esa ciudad no existe favor ingrese otro nombre" << endl;
+        }
+        list<Ciudades>::iterator it;
+        for (it = misCiudades.begin(); it != misCiudades.end(); it++) {
+
+            if ( it->Nombre!="comodin" && it->Nombre!="") {
+                cout << it->Nombre << endl;
+            }
+        }
+        getline(cin, newVillage);
+
+      
+        for (it = misCiudades.begin(); it != misCiudades.end(); it++) {
+
+            if (newVillage == it->Nombre) {
+                CiudadExiste = true;
+            }
+        }
+
+        if (CiudadExiste == true) {
+            newGuardian.Village = newVillage;
+        }
+        auxcont = 1;
+    }
+    
+    newGuardian.PowerLevel = 90;
+
+    return newGuardian;
+}
 string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
 
     system("cls");
@@ -241,6 +312,7 @@ string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
 
         if (yaesxiste == false && it2->Nombre!="comodin" && it2->Nombre!=""){
             cout << it2->Nombre << endl;
+            alquimea.push_back(it2->Nombre);
         }
 
         yaesxiste = false;
@@ -288,7 +360,7 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
     queue<string>recorrido;
     miGuardian.Name = "Nulo";
     cout << "Bienvenido a el juego" << endl;
-    cout << "selecione un guardian con el que quiere jugar (escriba el nombre exactamente igual)"<<endl;
+    cout << "selecione un guardian con el que quiere jugar (escriba el nombre exactamente igual o ingrese un crear para crear su propio guardian)"<<endl;
     cout << "---------------------------------------------------\n" << endl;
   
   
@@ -308,11 +380,12 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
            
     }
 
+
     string buscar;
     Guardian Pointer;
     list<Ciudades>::iterator it9;
  
-    while (miGuardian.Name == "Nulo") {
+    while (miGuardian.Name == "Nulo" && buscar != "crear") {
         cin >> buscar;
 
         list<Guardian>::iterator it;
@@ -340,6 +413,10 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
             }
 
         }
+        if (buscar == "crear") {
+            miGuardian = CrearGuardianPropio(Guardianes, misCiudades);
+        }
+       
 
     }
 
@@ -381,6 +458,7 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
     }
 
 }
+
 
 
 
