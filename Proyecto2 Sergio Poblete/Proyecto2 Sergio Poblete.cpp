@@ -170,10 +170,19 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
             if (it3->Name == MaestroActual.Name && selector == it3->Name) {
                 resultado = pelea(Guardianes,misCiudades,miGuardian, it3->Name);
                 if (resultado == true) {
-                    *stormhart = true;
+                    if (miGuardian->Village == "Tesla") {
+                        *stormhart = true;
+                        cout << "LE GANASTE AL GRAN MAESTRO STORMHART" << endl;
+                        cout << "VICTORIA" << endl;
+                    }
                     return 2;
                 }
                 else {
+                    if (miGuardian->Village == "Tesla") {
+                        *stormhart = true;
+                        cout << "PERDISTE CONTRA STORMHART..." << endl;
+                        cout << "DERROTA" << endl;
+                    }
                     return 0;
                 }
             }
@@ -445,7 +454,7 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
        
     }
 
-    system("cls");
+ 
 
     list<Guardian>::iterator it3;
     for (it3 = Guardianes.begin(); it3  != Guardianes.end(); it3++) {
