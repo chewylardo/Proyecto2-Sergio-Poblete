@@ -143,7 +143,7 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
         cout << "Otras opciones" << endl;
         for (it2 = CiudadActual.guardianes.begin(); it2 != CiudadActual.guardianes.end(); it2++) {
 
-            if (it2->Name != MaestroActual.Name && it2->Name != Recomendado.Name) {
+            if (it2->Name != MaestroActual.Name && it2->Name != Recomendado.Name && it2->Name != "") {
                 cout << it2->Name << " " << it2->PowerLevel << endl;
             }
 
@@ -156,8 +156,9 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
         }
         else {
             cout << "No estas listo para pelear en contra de " << MaestroActual.Name << endl;
+            return 0;
         }
-
+        
     }
 
     do {
@@ -277,13 +278,13 @@ string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
 }
 
 void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
-
+    system("cls");
     Guardian miGuardian;
     queue<string>recorrido;
     miGuardian.Name = "Nulo";
     cout << "Bienvenido a el juego" << endl;
     cout << "selecione un guardian con el que quiere jugar (escriba el nombre exactamente igual)"<<endl;
-    cout << "\n" << endl;
+    cout << "---------------------------------------------------\n" << endl;
   
   
 
@@ -292,8 +293,11 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
 
         for (auto const& i : it->guardianes) {
 
-            cout << i.Name << endl;
-            cout << i.auxPowerLevel << endl;
+            if (i.Name != "Stormheart" && i.Name != "") {
+                cout << i.Name << endl;
+            }
+           
+            
             
         }
            
@@ -312,7 +316,7 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
             for (it2 = misCiudades.begin(); it2 != misCiudades.end(); it2++) {
                 list<Guardian>::iterator it3;
                 for (it3 = it2->guardianes.begin(); it3 != it2->guardianes.end(); it3++) {
-                    if (buscar == it->Name && it->Name == it3->Name) {
+                    if (buscar == it->Name && it->Name == it3->Name && buscar != "Stormheart" && buscar != "") {
                         miGuardian.Name = it->Name;
                         miGuardian.Village = it->Village;
                         miGuardian.MainMaster = it->MainMaster;
@@ -392,7 +396,7 @@ Guardian crearG(string name,  string  village, string  mainMaster, int powerleve
 Ciudades crearC(string nombre,string vecino,list<Ciudades> auxlist) {
 
     Ciudades newCiudad;
-    bool VecinoExiste;
+   
     
     list<Ciudades>::iterator it;
     for (it = auxlist.begin(); it != auxlist.end(); it++)
@@ -419,6 +423,35 @@ Ciudades crearC(string nombre,string vecino,list<Ciudades> auxlist) {
 
     return newCiudad;
 }
+
+
+Ciudades ValidacionFinalCiudades(list<Ciudades>misCiudades,string Nombre) {
+    Ciudades AuxCity;
+    bool ciudadExiste = false;
+
+
+    list<Ciudades>::iterator it;
+    for (it = misCiudades.begin(); it != misCiudades.end(); it++)
+    {
+        if (it->Nombre == Nombre) {
+
+            ciudadExiste = true;
+        }
+
+    }
+
+    if (ciudadExiste == false) {
+        return crearC(Nombre, " ", misCiudades);
+    }
+    else {
+        return crearC("comodin", " ", misCiudades);
+    }
+  
+
+   
+   
+}
+
 
 Ciudades buscarVecino(list<Ciudades>misCiudades, string vecino) {
 
@@ -516,6 +549,9 @@ int main(int argc, char** argv)
         //cout << Village<< endl;
     }
 
+    //capital,forest,mountain,desert,coast,river,valley,hill
+    //forest,mountain,capital,desert,coast,river,valley,hill,
+
     //cout << "\n\n\n\n" << endl;
     inFile.close();
     list<Guardian>::iterator it;
@@ -557,11 +593,30 @@ int main(int argc, char** argv)
         }
     }
 
+    list<Ciudades>::iterator yt;
+    for (yt = misCiudades.begin(); yt != misCiudades.end(); yt++)
+    {
+        list<string>::iterator yt2;
+        for (yt2 = yt->Vecinos.begin(); yt2 != yt->Vecinos.end(); yt2++)
+        {
+
+            misCiudades.push_back(ValidacionFinalCiudades(misCiudades, *yt2));
+        }
+    }
+
     if (tesla == false) {
 
         misCiudades.push_back(crearC("Tesla", "", misCiudades));
     }
 
+    list<Ciudades>::iterator it2;
+    for (it2 = misCiudades.begin(); it2 != misCiudades.end(); it2++)
+    {   
+        if(it2->Nombre!="comodin")
+        cout << it2->Nombre << endl;
+    }
+
+    list<string>auxNombres;
 
     inFile2.close();
     int contciudades = 0;
@@ -594,7 +649,7 @@ int main(int argc, char** argv)
     list<Ciudades>::iterator it4;
     for (it4 = misCiudades.begin(); it4 != misCiudades.end(); it4++) {
         contHabitantes = 0;
-        if (it4->Nombre != "comodin") {
+        if (it4->Nombre != "comodin" && it4->Nombre!=" ") {
             for (auto const& i : it4->guardianes) {
 
                 if (it4->Nombre != "Tesla") {
@@ -606,10 +661,11 @@ int main(int argc, char** argv)
                     contHabitantes = 2;
                 }
 
+                cout << it4->Nombre << " " << i.Name<<endl;
 
             }
-            //cout << contHabitantes << endl;
-            if (contHabitantes < 2) {
+            cout << contHabitantes << endl;
+            if (contHabitantes < 2 ) {
                 //cout << it4->Nombre << endl;
                 cout << "Porfavor reparar archivo Guardianes.txt" << endl;
                 cout << "Se requieren minimo 2 guardianes por ciudad(sin incluir tesla, este solo necesita 1)";
