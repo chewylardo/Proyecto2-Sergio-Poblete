@@ -58,7 +58,7 @@ Guardian reeplazarGuardian(Guardian i) {
 
     }
    
-    int random = min + (rand() % (max));
+    int random = min + (rand() % (max-min+1));
     cout << "soy random " << random << endl;
     i.PowerLevel = random;
 
@@ -200,7 +200,7 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
 string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
 
     system("cls");
-  
+    srand((unsigned)time(NULL));
     cout << "A que ciudad desea usted viajar" << endl;
     list<string>normal;
     list<string>alquimea;
@@ -214,7 +214,7 @@ string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
         }
 
     }
-    cout << "Viaje regular + 1 punto" << endl;
+    cout << "Viaje regular (ganar 1 punto)" << endl;
     cout << "------------------------------" << endl;
     for (auto const& i : CiudadActual.Vecinos) {
 
@@ -224,7 +224,7 @@ string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
     }
 
     cout << "\n\n" << endl;
-    cout << "Viaje con alquimea -4 puntos" << endl;
+    cout << "Viaje con alquimea (perder de 2 a 4 puntos)" << endl;
     cout << "------------------------------" << endl;
     int aux = 0;
     list<Ciudades>::iterator it2;
@@ -261,8 +261,10 @@ string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
 
             if (voydeviaje == i) {
                 system("cls");
-                cout << "viajaste a " << i << " perdiste 4 puntos" << endl;
-                miGuardian->PowerLevel -= 4;
+                int random = 2 + (rand() % (4 - 2 + 1));
+                cout << "viajaste a " << i << " perdiste "<<random<< " puntos" << endl;
+                
+                miGuardian->PowerLevel -= random;
                 cout << "\n\n" << endl;
                 return i;
             }
