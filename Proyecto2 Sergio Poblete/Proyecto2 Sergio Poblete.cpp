@@ -73,9 +73,9 @@ bool pelea(list<Guardian>* Guardianes, list<Ciudades>* misCiudades, Guardian* mi
     for (it = Guardianes->begin(); it != Guardianes->end(); it++) {
 
         if (it->Name == enemigoElegido) {
-            int random = 1 + (rand() % (20));
+            int random = 1 + (rand() % (10));
             playerPower = miGuardian->PowerLevel * random;
-             random = 1 + (rand() % (20));
+             random = 1 + (rand() % (10));
              enemyPower = it->PowerLevel * random;
             if (playerPower >= enemyPower) {
                 
@@ -274,7 +274,7 @@ Guardian CrearGuardianPropio(list<Guardian>Guardianes, list<Ciudades> misCiudade
         auxcont = 1;
     }
     
-    newGuardian.PowerLevel = 1000;
+    newGuardian.PowerLevel = 50;
 
     return newGuardian;
 }
@@ -364,12 +364,53 @@ string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
     return "test1";
 }
 
+
+void reducirPoderCiudad(list<Ciudades>* misCiudades, Guardian miGuardian, int pointslost) {
+    
+
+
+    list<Ciudades>::iterator it;
+    for (it = misCiudades->begin(); it != misCiudades->end(); it++) {
+
+        if (miGuardian.Village == it->Nombre) {
+
+
+            it->puntosTotales -= pointslost;
+            if (it->puntosTotales < 0) {
+                it->puntosTotales = 0;
+            }
+        }
+
+
+    }
+
+}
+
+int PoderCiudad(list<Ciudades>* misCiudades, Guardian miGuardian) {
+
+
+
+    list<Ciudades>::iterator it;
+    for (it = misCiudades->begin(); it != misCiudades->end(); it++) {
+
+        if (miGuardian.Village == it->Nombre) {
+
+
+            return it->puntosTotales;
+        }
+
+
+    }
+
+    return 0;
+}
+
 void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
     system("cls");
     Guardian miGuardian;
     list<string>recorrido;
     miGuardian.Name = "Nulo";
-    cout << "Bienvenido a el juego" << endl;
+    cout << "Bienvenido a The Guardian Journey" << endl;
     cout << "selecione un guardian con el que quiere jugar (escriba el nombre exactamente igual o ingrese un crear para crear su propio guardian)"<<endl;
     cout << "---------------------------------------------------\n" << endl;
   
@@ -430,7 +471,7 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
 
     }
 
-
+    int previousPower;
     system("cls");
     bool StormhartDefeated = false;
     string selector1;
@@ -439,17 +480,26 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
         cout << "Jugando con " << miGuardian.Name << endl;
         cout << "Poder Actual " << miGuardian.PowerLevel << endl;
         cout << "Ciudad Actual " << miGuardian.Village << endl;
+        cout << "Puntos por sacar en esta ciudad " << PoderCiudad(&misCiudades, miGuardian) <<endl;
         cout << "------------------------------------------------" << endl;
         cout << "Quiere viajar o entrenar" << endl;
         cout << "(escriba que prefiere)" << endl;
         cin >> selector1;
-        if (selector1 == "viajar") {
+        if (selector1 == "viajar" ) {
             miGuardian.Village=viajar(&miGuardian, misCiudades);
             recorrido.push_back(miGuardian.Village);
         }
-        if (selector1 == "entrenar") {
-            miGuardian.PowerLevel+=entrenar(&Guardianes, &misCiudades, &miGuardian,&StormhartDefeated);
-            miGuardian.auxPowerLevel = 90;
+        if (selector1 == "entrenar" ) {
+            if (0 < PoderCiudad(&misCiudades, miGuardian)) {
+                previousPower = miGuardian.PowerLevel;
+                miGuardian.PowerLevel += entrenar(&Guardianes, &misCiudades, &miGuardian, &StormhartDefeated);
+                if (miGuardian.PowerLevel > previousPower) {
+                    reducirPoderCiudad(&misCiudades, miGuardian, miGuardian.PowerLevel - previousPower);
+                }
+            }
+            else {
+                cout << "ya no se pueden ganar mas puntos de esta ciudad entrenando" << endl;
+            }
         }
        
     }
