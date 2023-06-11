@@ -67,9 +67,45 @@ Guardian reeplazarGuardian(Guardian i) {
 int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *miGuardian) {
 
 
-    
+    Ciudades CiudadActual;
+    for (auto const& i : *misCiudades) {
+        if (i.Nombre == miGuardian->Village) {
+            CiudadActual = i;
+            cout << "mi ciudad es " << CiudadActual.Nombre << endl;
+        }
 
+    }
 
+    int min;
+    int max;
+    int cont = 0;
+    Guardian *MaestroActual = new Guardian();
+    Guardian *Recomendado = new Guardian();;
+
+    for (auto const& i : CiudadActual.guardianes) {
+        
+        if (cont == 0) {
+            min = i.PowerLevel;
+            max = i.PowerLevel;
+        }else if(i.PowerLevel>max){
+            max = i.PowerLevel;
+            *MaestroActual = i;
+        }
+        else if(i.PowerLevel<min){
+            min = i.PowerLevel;
+            *Recomendado = i;
+        }
+
+        cont++;
+    }
+
+    MaestroActual->estado = "Derrotado";
+
+    for (auto const& i : CiudadActual.guardianes) {
+        if (MaestroActual->Name == i.Name) {
+            cout << "el estado actual de " << i.Name << " es " << i.estado << endl;
+        }
+    }
 
 
 
@@ -226,7 +262,7 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
         }
         if (selector1 == "entrenar") {
             entrenar(&Guardianes, &misCiudades, &miGuardian);
-            cout <<"mi guardian ahora es "<< miGuardian.Name << endl;
+           
         }
         
     }
