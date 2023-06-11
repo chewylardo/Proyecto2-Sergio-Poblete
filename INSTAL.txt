@@ -1,0 +1,7 @@
+﻿Para poder instalar el programa y hacer que funcione, debemos primero cerciorarnos de tener visual studio 2019 con el compilador de c + + adecuado.
+
+
+Luego de esto colocaremos o descargamos el repositorio de github donde nuestro visual studio guarda sus proyectos.
+
+
+Una vez hecho esto  abriremos visual studio y con este nuestro proyecto, una vez dentro de nuestro proyecto en el explorador de la derecha hacemos doble click en el .snl del proyecto. En el explorador ahora saldrán unas carpetas y uk icono morado haremos click derecho en el icono morado eh iremos a propiedades.Una vez ahí iremos a las opciones de depuración y revisaremos que gusten los argumentos Guardianes.txt y Villages.txt si no es así los añadiremos a mano(copiar siguiente texto de forma exacta: Guardians.txt Villages.txt).Luego de esto compilamos nuestro programa y jugamos.
