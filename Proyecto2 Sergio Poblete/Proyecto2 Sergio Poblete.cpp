@@ -64,7 +64,35 @@ Guardian reeplazarGuardian(Guardian i) {
 
     return i;
 }
+bool pelea(list<Guardian>* Guardianes, list<Ciudades>* misCiudades, Guardian* miGuardian,string enemigoElegido){
 
+    srand((unsigned)time(NULL));
+    list<Guardian>::iterator it;
+    int playerPower;
+    int enemyPower;
+    for (it = Guardianes->begin(); it != Guardianes->end(); it++) {
+
+        if (it->Name == enemigoElegido) {
+            int random = 1 + (rand() % (20));
+            playerPower = miGuardian->PowerLevel * random;
+             random = 1 + (rand() % (20));
+             enemyPower = it->PowerLevel * random;
+            if (playerPower >= enemyPower) {
+                
+                return true;
+            }
+            else {
+
+                return false;
+            }
+        }
+
+    }
+
+
+
+    return false;
+}
 int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *miGuardian) {
 
 
@@ -82,6 +110,7 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
     int cont = 0;
     Guardian MaestroActual;
     Guardian Recomendado;
+    string selector;
 
     for (auto const& i : CiudadActual.guardianes) {
         
@@ -104,22 +133,62 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
         
         cont++;
     }
+    system("cls");
+    cout << "Elija con quien quiere entrenar(introdusca el nombre exactio)" << endl;
+    if (miGuardian->Village != "Tesla" ) {
 
-    cout << "Elija con quien quiere entrenar" << endl;
-    list<Guardian>::iterator it2;
-    cout << "Maestro " << MaestroActual.Name << MaestroActual.PowerLevel<< endl;
-    cout << "Aprendiz recomendad " << Recomendado.Name << Recomendado.PowerLevel<< endl;
-    cout << "Otras opciones" << endl;
-    for (it2 = CiudadActual.guardianes.begin(); it2 != CiudadActual.guardianes.end(); it2++) {
-        
-        if (it2->Name != MaestroActual.Name && it2->Name != Recomendado.Name) {
-            cout << it2->Name << " " << it2->PowerLevel << endl;
+        list<Guardian>::iterator it2;
+        cout << "Maestro " << MaestroActual.Name << MaestroActual.PowerLevel << endl;
+        cout << "Aprendiz recomendad " << Recomendado.Name << Recomendado.PowerLevel << endl;
+        cout << "Otras opciones" << endl;
+        for (it2 = CiudadActual.guardianes.begin(); it2 != CiudadActual.guardianes.end(); it2++) {
+
+            if (it2->Name != MaestroActual.Name && it2->Name != Recomendado.Name) {
+                cout << it2->Name << " " << it2->PowerLevel << endl;
+            }
+
+        }
+
+    }
+    else {
+        if (miGuardian->PowerLevel >= 90) {
+            cout << "deseas pelear contra " << MaestroActual.Name << " " << MaestroActual.PowerLevel << endl;
+        }
+        else {
+            cout << "No estas listo para pelear en contra de " << MaestroActual.Name << endl;
         }
 
     }
 
+    do {
+        cin >> selector;
+        bool resultado;
+        list<Guardian>::iterator it3;
+        for (it3 = CiudadActual.guardianes.begin(); it3 != CiudadActual.guardianes.end(); it3++) {
+
+            if (it3->Name == MaestroActual.Name && selector == it3->Name) {
+                resultado = pelea(Guardianes,misCiudades,miGuardian, it3->Name);
+                if (resultado == true) {
+                    return 2;
+                }
+                else {
+                    return 0;
+                }
+            }
+            else if (selector == it3->Name) {
+                resultado = pelea(Guardianes, misCiudades, miGuardian, it3->Name);
+                if (resultado == true) {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+            }
 
 
+        }
+        selector = "Nulo";
+    }while (selector == "Nulo");
 
 
 
@@ -130,6 +199,7 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
 string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
 
     system("cls");
+  
     cout << "A que ciudad desea usted viajar" << endl;
     list<string>normal;
     list<string>alquimea;
@@ -146,12 +216,12 @@ string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
     cout << "Viaje regular + 1 punto" << endl;
     cout << "------------------------------" << endl;
     for (auto const& i : CiudadActual.Vecinos) {
-        
+
         cout << i << endl;
         normal.push_back(i);
-      
+
     }
-    
+
     cout << "\n\n" << endl;
     cout << "Viaje con alquimea -4 puntos" << endl;
     cout << "------------------------------" << endl;
@@ -160,7 +230,7 @@ string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
     for (it2 = misCiudades.begin(); it2 != misCiudades.end(); it2++) {
 
         for (auto const& i : CiudadActual.newVecinos) {
-            
+
             if (it2->Nombre == i.Nombre) {
                 aux++;
             }
@@ -231,7 +301,8 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
 
     string buscar;
     Guardian Pointer;
-    
+    list<Ciudades>::iterator it9;
+ 
     while (miGuardian.Name == "Nulo") {
         cin >> buscar;
 
@@ -267,7 +338,7 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
     system("cls");
     bool StormhartDefeated = false;
     string selector1;
-    
+    recorrido.push(miGuardian.Village);
     while (StormhartDefeated == false) {
         cout << "Jugando con " << miGuardian.Name << endl;
         cout << "Poder Actual " << miGuardian.PowerLevel << endl;
@@ -278,10 +349,11 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
         cin >> selector1;
         if (selector1 == "viajar") {
             miGuardian.Village=viajar(&miGuardian, misCiudades);
+            recorrido.push(miGuardian.Village);
         }
         if (selector1 == "entrenar") {
-            entrenar(&Guardianes, &misCiudades, &miGuardian);
-           
+            miGuardian.PowerLevel+=entrenar(&Guardianes, &misCiudades, &miGuardian);
+            miGuardian.auxPowerLevel = 90;
         }
        
     }
@@ -320,7 +392,7 @@ Guardian crearG(string name,  string  village, string  mainMaster, int powerleve
 Ciudades crearC(string nombre,string vecino,list<Ciudades> auxlist) {
 
     Ciudades newCiudad;
-   
+    bool VecinoExiste;
     
     list<Ciudades>::iterator it;
     for (it = auxlist.begin(); it != auxlist.end(); it++)
@@ -332,12 +404,16 @@ Ciudades crearC(string nombre,string vecino,list<Ciudades> auxlist) {
             newCiudad.Nombre = "comodin";
             return newCiudad;
         }
+        
     }
+
 
    
 
     newCiudad.Nombre = nombre;
     newCiudad.Vecinos.push_back(vecino);
+
+
     
    
 
@@ -415,7 +491,7 @@ int main(int argc, char** argv)
     ifstream inFile;
     list<Guardian>Guardianes;
     list<Ciudades>misCiudades;
-    
+
 
     inFile.open("Guardianes.txt");
     if (!inFile) {
@@ -425,17 +501,17 @@ int main(int argc, char** argv)
 
     string Name, auxPowerLevel, Village, MainMaster;
     int PowerLevel;
-    while(getline(inFile, mystring)){ 
+    while (getline(inFile, mystring)) {
         stringstream ss(mystring);
         getline(ss, Name, ',');
         getline(ss, auxPowerLevel, ',');
         PowerLevel = stoi(auxPowerLevel);
         getline(ss, MainMaster, ',');
         getline(ss, Village, ',');
-       // cout << PowerLevel << endl;
-       
-      
-       
+        // cout << PowerLevel << endl;
+
+
+
         Guardianes.push_back(crearG(Name, Village, MainMaster, PowerLevel));
         //cout << Village<< endl;
     }
@@ -446,9 +522,9 @@ int main(int argc, char** argv)
     for (it = Guardianes.begin(); it != Guardianes.end(); it++)
     {
         string name = it->Name;
-       // cout << name << endl;
-        //cout << it->PowerLevel << endl;
-        
+        // cout << name << endl;
+         //cout << it->PowerLevel << endl;
+
     }
 
     ifstream inFile2;
@@ -456,20 +532,20 @@ int main(int argc, char** argv)
     inFile2.open("Villages.txt");
     if (!inFile2) {
         cout << "Unable to open file";
-        exit(1); 
+        exit(1);
     }
 
     string ciudad, vecino;
     bool tesla = false;
     while (getline(inFile2, mynewstring)) {
         stringstream ss(mynewstring);
-        getline(ss,ciudad, ',');
-        getline(ss,vecino, ',');
+        getline(ss, ciudad, ',');
+        getline(ss, vecino, ',');
         list<Ciudades>::iterator it2;
         for (it2 = misCiudades.begin(); it2 != misCiudades.end(); it2++)
         {
             if (it2->Nombre == ciudad) {
-                
+
                 it2->Vecinos.push_back(vecino);
 
                 continue;
@@ -493,13 +569,13 @@ int main(int argc, char** argv)
     for (it3 = misCiudades.begin(); it3 != misCiudades.end(); it3++)
     {
         if (it3->Nombre != "comodin") {
-           // cout << "\n" << it3->Nombre << endl;
-            //cout << "\nse conecta con\n" ;
+            // cout << "\n" << it3->Nombre << endl;
+             //cout << "\nse conecta con\n" ;
             for (auto const& i : it3->Vecinos) {
-               //cout << i << endl;
+                //cout << i << endl;
             }
 
-            
+
         }
         contciudades++;
     }
@@ -513,12 +589,12 @@ int main(int argc, char** argv)
 
     misCiudades = Habitantes(Guardianes, misCiudades);
 
-    
+
     int contHabitantes = 0;
     list<Ciudades>::iterator it4;
     for (it4 = misCiudades.begin(); it4 != misCiudades.end(); it4++) {
         contHabitantes = 0;
-        if (it4->Nombre != "comodin" ) {
+        if (it4->Nombre != "comodin") {
             for (auto const& i : it4->guardianes) {
 
                 if (it4->Nombre != "Tesla") {
@@ -549,7 +625,7 @@ int main(int argc, char** argv)
         list<Guardian>::iterator it6;
         for (it6 = Guardianes.begin(); it6 != Guardianes.end(); it6++) {
 
-            if (it5->MainMaster == it6->Name){
+            if (it5->MainMaster == it6->Name) {
                 it5->Maestro.push_back(*it6);
             }
 
