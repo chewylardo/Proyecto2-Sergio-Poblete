@@ -226,21 +226,24 @@ string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
     cout << "\n\n" << endl;
     cout << "Viaje con alquimea (perder de 2 a 4 puntos)" << endl;
     cout << "------------------------------" << endl;
-    int aux = 0;
+    bool yaesxiste = false;
     list<Ciudades>::iterator it2;
     for (it2 = misCiudades.begin(); it2 != misCiudades.end(); it2++) {
+        list<string>::iterator it3;
+        for (it3 = normal.begin(); it3 !=normal.end(); it3++) {
 
-        for (auto const& i : CiudadActual.newVecinos) {
+            if (it2->Nombre == *it3) {
 
-            if (it2->Nombre == i.Nombre) {
-                aux++;
+                yaesxiste = true;
             }
+
         }
 
-        if (it2->Nombre != "comodin" && aux == 0) {
+        if (yaesxiste == false && it2->Nombre!="comodin" && it2->Nombre!=""){
             cout << it2->Nombre << endl;
-            alquimea.push_back(it2->Nombre);
         }
+
+        yaesxiste = false;
     }
 
     while(voydeviaje!="yaviaje"){
