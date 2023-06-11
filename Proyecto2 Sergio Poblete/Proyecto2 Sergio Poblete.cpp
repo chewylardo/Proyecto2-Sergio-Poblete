@@ -93,7 +93,7 @@ bool pelea(list<Guardian>* Guardianes, list<Ciudades>* misCiudades, Guardian* mi
 
     return false;
 }
-int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *miGuardian) {
+int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *miGuardian,bool *stormhart) {
 
 
     Ciudades CiudadActual;
@@ -170,6 +170,7 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
             if (it3->Name == MaestroActual.Name && selector == it3->Name) {
                 resultado = pelea(Guardianes,misCiudades,miGuardian, it3->Name);
                 if (resultado == true) {
+                    *stormhart = true;
                     return 2;
                 }
                 else {
@@ -264,7 +265,7 @@ Guardian CrearGuardianPropio(list<Guardian>Guardianes, list<Ciudades> misCiudade
         auxcont = 1;
     }
     
-    newGuardian.PowerLevel = 90;
+    newGuardian.PowerLevel = 1000;
 
     return newGuardian;
 }
@@ -357,7 +358,7 @@ string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
 void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
     system("cls");
     Guardian miGuardian;
-    queue<string>recorrido;
+    list<string>recorrido;
     miGuardian.Name = "Nulo";
     cout << "Bienvenido a el juego" << endl;
     cout << "selecione un guardian con el que quiere jugar (escriba el nombre exactamente igual o ingrese un crear para crear su propio guardian)"<<endl;
@@ -424,7 +425,7 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
     system("cls");
     bool StormhartDefeated = false;
     string selector1;
-    recorrido.push(miGuardian.Village);
+    recorrido.push_back(miGuardian.Village);
     while (StormhartDefeated == false) {
         cout << "Jugando con " << miGuardian.Name << endl;
         cout << "Poder Actual " << miGuardian.PowerLevel << endl;
@@ -435,10 +436,10 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
         cin >> selector1;
         if (selector1 == "viajar") {
             miGuardian.Village=viajar(&miGuardian, misCiudades);
-            recorrido.push(miGuardian.Village);
+            recorrido.push_back(miGuardian.Village);
         }
         if (selector1 == "entrenar") {
-            miGuardian.PowerLevel+=entrenar(&Guardianes, &misCiudades, &miGuardian);
+            miGuardian.PowerLevel+=entrenar(&Guardianes, &misCiudades, &miGuardian,&StormhartDefeated);
             miGuardian.auxPowerLevel = 90;
         }
        
