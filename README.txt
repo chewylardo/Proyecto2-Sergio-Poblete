@@ -5,3 +5,7 @@ Con esto asegurado, las reglas son las siguientes: el jugador deberá elegir ent
 
 
 El juego se controla a través del teclado en su totalidad y es mejor asegurarse de que este sea en inglés, así no existen inconvenientes con ciertos carácteres como la "ñ" aunque se puede jugar con cualquier teclado evitando ingresar estos caracteres.
+
+Video de explicacion abajo:
+
+https://drive.google.com/drive/folders/1UrWxnangkD0Hd4IOGNGAU1jKI23r1XzZ?usp=sharing 
