@@ -175,6 +175,7 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
                         cout << "LE GANASTE AL GRAN MAESTRO STORMHART" << endl;
                         cout << "VICTORIA" << endl;
                     }
+                    it3->estado = "defeated";
                     return 2;
                 }
                 else {
@@ -189,6 +190,7 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
             else if (selector == it3->Name) {
                 resultado = pelea(Guardianes, misCiudades, miGuardian, it3->Name);
                 if (resultado == true) {
+                    it3->estado = "defeated";
                     return 1;
                 }
                 else {
@@ -274,7 +276,7 @@ Guardian CrearGuardianPropio(list<Guardian>Guardianes, list<Ciudades> misCiudade
         auxcont = 1;
     }
     
-    newGuardian.PowerLevel = 50;
+    newGuardian.PowerLevel = 500;
 
     return newGuardian;
 }
@@ -320,7 +322,7 @@ string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
 
         }
 
-        if (yaesxiste == false && it2->Nombre!="comodin" && it2->Nombre!=""){
+        if (yaesxiste == false && it2->Nombre!="comodin" && it2->Nombre!=""&&it2->Nombre!=miGuardian->Village){
             cout << it2->Nombre << endl;
             alquimea.push_back(it2->Nombre);
         }
@@ -403,6 +405,35 @@ int PoderCiudad(list<Ciudades>* misCiudades, Guardian miGuardian) {
     }
 
     return 0;
+}
+void imprimirRecorrido(list<string>recorrido) {
+
+    list<string>::iterator it;
+    for (it = recorrido.begin(); it != recorrido.end(); it++) {
+
+        cout << " " << *it << "->";
+
+
+    }
+
+    cout << "\n";
+}
+
+void imprimirGuardianes(list<Ciudades>misCiudades) {
+
+    list<Ciudades>::iterator it;
+    for (it = misCiudades.begin(); it != misCiudades.end(); it++) {
+
+        list<Guardian>::iterator it2;
+        for (it2 = it->guardianes.begin(); it2 != it->guardianes.end(); it2++) {
+            cout << "nombre " << it2->Name << " maestro " << it2->MainMaster << endl;
+        }
+
+
+    }
+
+
+    
 }
 
 void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
@@ -504,18 +535,13 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
        
     }
 
+    
+    imprimirRecorrido(recorrido);
+    imprimirGuardianes(misCiudades);
+       
  
 
-    list<Guardian>::iterator it3;
-    for (it3 = Guardianes.begin(); it3  != Guardianes.end(); it3++) {
-        
-        if (it3->Name != ""){
-            cout << "nombre " << it3->Name << " maestro " << it3->MainMaster << endl;
-        }
-        
-
-
-    }
+    
 
 }
 
