@@ -11,7 +11,7 @@
 #include <string>
 using namespace std;
 
-
+//creacion de la estructura para los guardianes
 typedef struct guardian {
 
     string Name, auxPowerLevel, Village, MainMaster;
@@ -23,7 +23,7 @@ typedef struct guardian {
 
 } Guardian;
 
-
+//creacion de la estructura para las aldeas/ciudades
 typedef struct ciudades {
     string Nombre;
     list<string>Vecinos;
@@ -34,6 +34,8 @@ typedef struct ciudades {
 
 
 }Ciudades;
+
+//impresion de todas las ciudades por las que el jugador
 void imprimirRecorrido(list<string>recorrido) {
     cout << "el historial del recorrido fue" << endl;
     list<string>::iterator it;
@@ -46,7 +48,7 @@ void imprimirRecorrido(list<string>recorrido) {
 
     cout << "\n";
 }
-
+//esta funcion imprime todos los guardianes y con que otro guardian se conecta de forma maestro
 void imprimirGuardianes(list<Ciudades>misCiudades) {
     cout << "la relacion maestro estudiante de todos los guardianes es" << endl;
     list<Ciudades>::iterator it;
@@ -56,13 +58,10 @@ void imprimirGuardianes(list<Ciudades>misCiudades) {
         for (it2 = it->guardianes.begin(); it2 != it->guardianes.end(); it2++) {
             cout << "nombre " << it2->Name << " maestro " << it2->MainMaster << endl;
         }
-
-
     }
-
-
-
 }
+
+//esto cambia al guardian al que elgimos ocupar por otro  nuevo (si es que elegimos ocupar un guardian ya creado)
 Guardian reeplazarGuardian(Guardian i) {
 
     i.Name = "Angron";
@@ -92,7 +91,7 @@ Guardian reeplazarGuardian(Guardian i) {
 
     return i;
 }
-
+//esto imprime un texto generico durante el entrenamiento
 void impresionPrePelea(string nameE,string miname,int enemypower,int mipower,string campo) {
     string aux;
    
@@ -101,6 +100,7 @@ void impresionPrePelea(string nameE,string miname,int enemypower,int mipower,str
     cout << "ingrese cualquier valor para continuar... " << endl;
     cin >> aux;
 }
+//esta funcion determina los resultados de los entrenamiento
 bool pelea(list<Guardian>* Guardianes, list<Ciudades>* misCiudades, Guardian* miGuardian,string enemigoElegido){
     string aux;
     srand((unsigned)time(NULL));
@@ -146,6 +146,7 @@ bool pelea(list<Guardian>* Guardianes, list<Ciudades>* misCiudades, Guardian* mi
 
     return false;
 }
+//esta funcion crea todo el escenario del combate y devuelve el resultado del combate al menu inicial
 int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *miGuardian,bool *stormhart) {
 
 
@@ -187,6 +188,7 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
         cont++;
     }
     system("cls");
+    //aqui se elige con quien quieres pelear
     cout << "Elija con quien quiere entrenar(introdusca el nombre exactio)" << endl;
     if (miGuardian->Village != "Tesla" ) {
 
@@ -213,7 +215,7 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
         }
         
     }
-
+    //aqui se devuelve el resultado a la funcion menu
     do {
         cin >> selector;
         bool resultado;
@@ -263,6 +265,7 @@ int entrenar(list<Guardian> *Guardianes, list<Ciudades> *misCiudades, Guardian *
     return 0;
 }
 
+//en esta funcion se crea nuestro propio guardian
 Guardian CrearGuardianPropio(list<Guardian>Guardianes, list<Ciudades> misCiudades) {
     Guardian newGuardian;
     
@@ -333,6 +336,7 @@ Guardian CrearGuardianPropio(list<Guardian>Guardianes, list<Ciudades> misCiudade
 
     return newGuardian;
 }
+//esta funcion te permite viajar y usar alquimea
 string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
 
     system("cls");
@@ -382,6 +386,7 @@ string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
 
         yaesxiste = false;
     }
+    //aqui devuelve que clase de viaje fue
 
     while(voydeviaje!="yaviaje"){
         getline(cin,voydeviaje);
@@ -419,7 +424,7 @@ string viajar(Guardian *miGuardian, list<Ciudades>misCiudades) {
     return "test1";
 }
 
-
+//aqui cambia el poder de la ciudad una vez se gana o se pierde la pelea
 void reducirPoderCiudad(list<Ciudades>* misCiudades, Guardian miGuardian, int pointslost) {
     
 
@@ -440,7 +445,7 @@ void reducirPoderCiudad(list<Ciudades>* misCiudades, Guardian miGuardian, int po
     }
 
 }
-
+//aqui imprimimos cuantos puntos maximos quedan por sacar de una ciudad
 int PoderCiudad(list<Ciudades>* misCiudades, Guardian miGuardian) {
 
 
@@ -460,7 +465,7 @@ int PoderCiudad(list<Ciudades>* misCiudades, Guardian miGuardian) {
     return 0;
 }
 
-
+//este es el menu donde ocurre todo el loop principal del juego
 void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
     system("cls");
     Guardian miGuardian;
@@ -526,7 +531,7 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
        
 
     }
-
+    //loop principal
     int previousPower;
     system("cls");
     bool StormhartDefeated = false;
@@ -573,7 +578,7 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
 
 
 
-
+//aqui se crean los guardianes
 Guardian crearG(string name,  string  village, string  mainMaster, int powerlevel) {
 
     Guardian newGuardian;
@@ -587,6 +592,7 @@ Guardian crearG(string name,  string  village, string  mainMaster, int powerleve
     return newGuardian;
 }
 
+//aqui se crean las ciudades
 Ciudades crearC(string nombre,string vecino,list<Ciudades> auxlist) {
 
     Ciudades newCiudad;
@@ -618,7 +624,7 @@ Ciudades crearC(string nombre,string vecino,list<Ciudades> auxlist) {
     return newCiudad;
 }
 
-
+//aqui validamos si faltan ciudades por crear que esten dentro de los veinos de los demas
 Ciudades ValidacionFinalCiudades(list<Ciudades>misCiudades,string Nombre) {
     Ciudades AuxCity;
     bool ciudadExiste = false;
@@ -646,7 +652,7 @@ Ciudades ValidacionFinalCiudades(list<Ciudades>misCiudades,string Nombre) {
    
 }
 
-
+//aqui buscamos los vecinos de las otras ciudades
 Ciudades buscarVecino(list<Ciudades>misCiudades, string vecino) {
 
     Ciudades auxCity;
@@ -664,7 +670,7 @@ Ciudades buscarVecino(list<Ciudades>misCiudades, string vecino) {
     return *it;
 
 }
-
+//aqui se crean los vecinos de cada ciudad
 void ListaDevecinos(list<Ciudades>misCiudades) {
 
 
@@ -684,6 +690,7 @@ void ListaDevecinos(list<Ciudades>misCiudades) {
 
 }
 
+//aqui se crean las listas de los habitantes de cada ciudad
 list<Ciudades> Habitantes(list<Guardian>Guardianes, list<Ciudades>misCiudades){
 
 
@@ -711,6 +718,7 @@ list<Ciudades> Habitantes(list<Guardian>Guardianes, list<Ciudades>misCiudades){
 
 }
 
+//aqui leeremos los archivos y mandamos todo a las demas funciones para usar
 int main(int argc, char** argv)
 {
 
@@ -719,7 +727,7 @@ int main(int argc, char** argv)
     list<Guardian>Guardianes;
     list<Ciudades>misCiudades;
 
-
+    //abrir archivos
     inFile.open("Guardianes.txt");
     if (!inFile) {
         cout << "Unable to open file";
@@ -743,8 +751,7 @@ int main(int argc, char** argv)
         //cout << Village<< endl;
     }
 
-    //capital,forest,mountain,desert,coast,river,valley,hill
-    //forest,mountain,capital,desert,coast,river,valley,hill,
+    
 
     //cout << "\n\n\n\n" << endl;
     inFile.close();
@@ -786,7 +793,7 @@ int main(int argc, char** argv)
             tesla = true;
         }
     }
-
+    //crear instancias de las estructuras a partir de los textos
     list<Ciudades>::iterator yt;
     for (yt = misCiudades.begin(); yt != misCiudades.end(); yt++)
     {
