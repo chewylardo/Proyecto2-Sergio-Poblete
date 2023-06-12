@@ -34,7 +34,35 @@ typedef struct ciudades {
 
 
 }Ciudades;
+void imprimirRecorrido(list<string>recorrido) {
+    cout << "el historial del recorrido fue" << endl;
+    list<string>::iterator it;
+    for (it = recorrido.begin(); it != recorrido.end(); it++) {
 
+        cout << " " << *it << "->";
+
+
+    }
+
+    cout << "\n";
+}
+
+void imprimirGuardianes(list<Ciudades>misCiudades) {
+    cout << "la relacion maestro estudiante de todos los guardianes es" << endl;
+    list<Ciudades>::iterator it;
+    for (it = misCiudades.begin(); it != misCiudades.end(); it++) {
+
+        list<Guardian>::iterator it2;
+        for (it2 = it->guardianes.begin(); it2 != it->guardianes.end(); it2++) {
+            cout << "nombre " << it2->Name << " maestro " << it2->MainMaster << endl;
+        }
+
+
+    }
+
+
+
+}
 Guardian reeplazarGuardian(Guardian i) {
 
     i.Name = "Angron";
@@ -64,8 +92,17 @@ Guardian reeplazarGuardian(Guardian i) {
 
     return i;
 }
-bool pelea(list<Guardian>* Guardianes, list<Ciudades>* misCiudades, Guardian* miGuardian,string enemigoElegido){
 
+void impresionPrePelea(string nameE,string miname,int enemypower,int mipower,string campo) {
+    string aux;
+   
+    cout << "peleando en contra de " <<nameE<< " en la aldea "<<campo<< endl;
+    cout << "tiene un poder de " <<enemypower<< " Comparado con el suyo de "<<mipower << endl;
+    cout << "ingrese cualquier valor para continuar... " << endl;
+    cin >> aux;
+}
+bool pelea(list<Guardian>* Guardianes, list<Ciudades>* misCiudades, Guardian* miGuardian,string enemigoElegido){
+    string aux;
     srand((unsigned)time(NULL));
     list<Guardian>::iterator it;
     int playerPower;
@@ -73,16 +110,32 @@ bool pelea(list<Guardian>* Guardianes, list<Ciudades>* misCiudades, Guardian* mi
     for (it = Guardianes->begin(); it != Guardianes->end(); it++) {
 
         if (it->Name == enemigoElegido) {
+            impresionPrePelea(it->Name, miGuardian->Name, it->PowerLevel, miGuardian->PowerLevel, it->Village);
             int random = 1 + (rand() % (10));
             playerPower = miGuardian->PowerLevel * random;
-             random = 1 + (rand() % (10));
-             enemyPower = it->PowerLevel * random;
+            cout << "su poder de combate en esta pelea es de " << playerPower << endl;
+            random = 1 + (rand() % (10));
+            enemyPower = it->PowerLevel * random;
+            cout << "el poder de combat del enemigo en esta pelea es de " << enemyPower << endl;
             if (playerPower >= enemyPower) {
                 
+                cout << "usted gana " << endl;
+                cout << "ingrese cualquier valor para continuar...(a continuacion se mostraran todos los guardianes)  " << endl;
+                cin >> aux;
+                imprimirGuardianes(*misCiudades);
+                cout << "ingrese cualquier valor para continuar... " << endl;
+                cin >> aux;
+                system("cls");
                 return true;
             }
             else {
-
+                cout << "usted pierde " << endl;
+                cout << "ingrese cualquier valor para continuar...(a continuacion se mostraran todos los guardianes) " << endl;
+                cin >> aux;
+                imprimirGuardianes(*misCiudades);
+                cout << "ingrese cualquier valor para continuar... " << endl;
+                cin >> aux;
+                system("cls");
                 return false;
             }
         }
@@ -276,7 +329,7 @@ Guardian CrearGuardianPropio(list<Guardian>Guardianes, list<Ciudades> misCiudade
         auxcont = 1;
     }
     
-    newGuardian.PowerLevel = 500;
+    newGuardian.PowerLevel = 50;
 
     return newGuardian;
 }
@@ -406,35 +459,7 @@ int PoderCiudad(list<Ciudades>* misCiudades, Guardian miGuardian) {
 
     return 0;
 }
-void imprimirRecorrido(list<string>recorrido) {
 
-    list<string>::iterator it;
-    for (it = recorrido.begin(); it != recorrido.end(); it++) {
-
-        cout << " " << *it << "->";
-
-
-    }
-
-    cout << "\n";
-}
-
-void imprimirGuardianes(list<Ciudades>misCiudades) {
-
-    list<Ciudades>::iterator it;
-    for (it = misCiudades.begin(); it != misCiudades.end(); it++) {
-
-        list<Guardian>::iterator it2;
-        for (it2 = it->guardianes.begin(); it2 != it->guardianes.end(); it2++) {
-            cout << "nombre " << it2->Name << " maestro " << it2->MainMaster << endl;
-        }
-
-
-    }
-
-
-    
-}
 
 void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
     system("cls");
@@ -480,7 +505,7 @@ void menuInicial(list<Guardian>Guardianes, list<Ciudades>misCiudades){
                         miGuardian.Name = it->Name;
                         miGuardian.Village = it->Village;
                         miGuardian.MainMaster = it->MainMaster;
-                        miGuardian.PowerLevel = it->PowerLevel / 2;
+                        miGuardian.PowerLevel = 50;
                         //cout << "original power level" << it->PowerLevel << endl;
 
                         *it = reeplazarGuardian(*it);
